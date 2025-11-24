@@ -18,7 +18,7 @@
     provided in the licences folder: iso9660_licente.txt
 """
 
-import os, sys, shutil, getopt
+import os, sys, shutil, getopt, re, shlex
 from copy import deepcopy
 from iso9660 import ISO9660 as _ISO9660_orig
 from struct import unpack
@@ -927,7 +927,7 @@ def parse_gdi(filename, verbose=False):
     dirname = os.path.dirname(filename)
 
     with open(filename) as f: # if i.split() removes blank lines
-        l = [i.split() for i in f.readlines() if i.split()]
+        l = [shlex.split(i) for i in f.readlines() if i.split()]
     if not int(l[3][1]) == 45000:
         raise AssertionError('Invalid gdi file: track03 LBA should be 45000')
 
